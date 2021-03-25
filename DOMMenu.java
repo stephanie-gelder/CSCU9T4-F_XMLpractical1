@@ -40,8 +40,10 @@ public class DOMMenu {
   public static void main(String[] args)  {
     // load XML file into "document"
     loadDocument(args[0]);
+
     // validate document method call to validate the document before the nodes are printed
     //validateDocument(filename);
+
     // print staff.xml using DOM methods and XPath queries
     printNodes();
   }
@@ -87,7 +89,8 @@ public class DOMMenu {
       return true;
     } catch (Exception e){ //exception thrown if not validated
       System.err.println(e);
-      System.err.println("Could not load schema or validate"); //change to a specific message
+      //System.err.println("Could not load schema or validate"); //change to a specific message
+      System.err.println("Line reached in schema could not be loaded or validated due to an error in the syntax");
       return false;
     }
   }
@@ -99,6 +102,9 @@ public class DOMMenu {
     Node menuItem_2 = menuItem_1.getFirstChild().getNextSibling();
     System.out.println("First child is: " + menuItem_1.getNodeName());
     System.out.println("  Child is: " + menuItem_2.getNodeName());
+
+    Node item = document.getElementsByTagName("item").item(1);
+    System.out.println(item.getTextContent());
 
   }
 
