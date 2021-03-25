@@ -98,13 +98,23 @@ public class DOMMenu {
     Print nodes using DOM methods and XPath queries.
   */
   private static void printNodes() { //MODIFY METHOD to iterate through each node in the menu an print out the content
-    Node menuItem_1 = document.getFirstChild();
-    Node menuItem_2 = menuItem_1.getFirstChild().getNextSibling();
-    System.out.println("First child is: " + menuItem_1.getNodeName());
-    System.out.println("  Child is: " + menuItem_2.getNodeName());
+//    Node menuItem_1 = document.getFirstChild();
+//    Node menuItem_2 = menuItem_1.getFirstChild().getNextSibling();
+//    System.out.println("First child is: " + menuItem_1.getNodeName());
+//    System.out.println("  Child is: " + menuItem_2.getNodeName());
 
-    Node item = document.getElementsByTagName("item").item(1);
-    System.out.println(item.getTextContent());
+//    Node menuItem_3 = document.getElementsByTagName("item").item(1);
+//    //NodeList items = document.getElementsByTagName("item");
+//    System.out.println(menuItem_3.getTextContent());
+
+    NodeList menuItems = document.getElementsByTagName("*");
+    for (int i = 0; i < menuItems.getLength(); i++){
+      Node item = menuItems.item(i);
+      if(item.getNodeType() == Node.ELEMENT_NODE){
+        System.out.println(item.getTextContent());
+        //System.out.println(item.getNodeName());
+      }
+    }
 
   }
 
