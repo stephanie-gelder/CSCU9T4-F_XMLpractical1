@@ -1,13 +1,16 @@
 import org.xml.sax.*;				// import SAX classes
 import org.xml.sax.helpers.*;		// import SAX helper classes
 
+//extends default handler and overrides main methods
+//modify script so that when it encounters menu item it prints the menu name and info
+//could add some class variables to keep track of the element yur in or the last one you were in
 /**
   SAX event handler to output in basic format.
 
   @author 	CSCU9T4 Demo, University of Stirling
   @version  11/03/20
 */
-public class MenuHandler extends DefaultHandler {
+public class MenuHandler extends DefaultHandler { //DefaultHandler is a default class from XMLSAX
   /**
     Callback when parser finds character data.
 
@@ -18,6 +21,7 @@ public class MenuHandler extends DefaultHandler {
   */
   public void characters(char ch[], int start, int length) {
     String characters = new String(ch, start, length).trim();
+    System.out.println(length);
     if (!characters.isEmpty())
       System.out.println("  characters '" + characters + "'");
   }
@@ -63,7 +67,7 @@ public class MenuHandler extends DefaultHandler {
     @throws			SAX exception
   */
   public void startElement(String namespaceURI, String localName,
-   String qName, Attributes attributes) throws SAXException {
+                            String qName, Attributes attributes) throws SAXException {
     System.out.println("startElement callback for '"  + qName + "'");
     for (int i = 0; i < attributes.getLength(); i++)
       System.out.println(

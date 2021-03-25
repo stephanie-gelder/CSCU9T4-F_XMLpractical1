@@ -40,10 +40,10 @@ public class DOMMenu {
   public static void main(String[] args)  {
     // load XML file into "document"
     loadDocument(args[0]);
+    // validate document method call to validate the document before the nodes are printed
+    //validateDocument(filename);
     // print staff.xml using DOM methods and XPath queries
     printNodes();
-  
-   
   }
 
   /**
@@ -53,7 +53,7 @@ public class DOMMenu {
   */
   private static void loadDocument(String filename) {
     try {
-      // create a document builder
+      // create a new document builder from the builderFactory
       DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
       builder = builderFactory.newDocumentBuilder();
 
@@ -62,7 +62,10 @@ public class DOMMenu {
       path = xpathFactory.newXPath();
 
       // parse the document for later searching
-      document = builder.parse(new File(filename));
+      document = builder.parse(new File(filename)); //XML document is parsed into a full tree document
+
+      // validate document method call to validate the document before the nodes are printed
+      validateDocument(filename);
     }
     catch (Exception exception) {
       System.err.println("could not load document " + exception);
@@ -80,18 +83,18 @@ public class DOMMenu {
       SchemaFactory factory = SchemaFactory.newInstance(language);
       schema = factory.newSchema(new File(filename));
       Validator validator = schema.newValidator();
-      validator.validate(new DOMSource(document));
+      validator.validate(new DOMSource(document)); //convert file into its own source before its validated
       return true;
-    } catch (Exception e){
+    } catch (Exception e){ //exception thrown if not validated
       System.err.println(e);
-      System.err.println("Could not load schema or validate");
+      System.err.println("Could not load schema or validate"); //change to a specific message
       return false;
     }
   }
   /**
     Print nodes using DOM methods and XPath queries.
   */
-  private static void printNodes() {
+  private static void printNodes() { //MODIFY METHOD to iterate through each node in the menu an print out the content
     Node menuItem_1 = document.getFirstChild();
     Node menuItem_2 = menuItem_1.getFirstChild().getNextSibling();
     System.out.println("First child is: " + menuItem_1.getNodeName());
