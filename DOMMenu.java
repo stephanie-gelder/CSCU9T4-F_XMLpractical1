@@ -106,14 +106,14 @@ public class DOMMenu {
     Node menuItem_3 = document.getElementsByTagName("item").item(1);
     System.out.println(menuItem_3.getTextContent());
 
-//    NodeList menuItems = document.getElementsByTagName("*");
-//    for (int i = 0; i < menuItems.getLength(); i++){
-//      Node item = menuItems.item(i);
-//      if(item.getNodeType() == Node.ELEMENT_NODE){
-//        System.out.println(item.getTextContent());
-//        //System.out.println(item.getNodeName());
-//      }
-//    }
+    NodeList menuItems = document.getElementsByTagName("*");
+    for (int i = 0; i < menuItems.getLength(); i++){
+      Node item = menuItems.item(i);
+      if(item.getNodeType() == Node.ELEMENT_NODE){
+        System.out.println(item.getTextContent());
+        //System.out.println(item.getNodeName());
+      }
+    }
   }
 
   /**
