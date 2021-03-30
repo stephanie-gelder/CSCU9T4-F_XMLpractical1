@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu>
     <item category="starters">
-        <name>Bread Sticks</name>
+        <name>Bread sticks</name>
         <price>0.30</price>
         <description>Something to fill you up while you wait.</description>
     </item>

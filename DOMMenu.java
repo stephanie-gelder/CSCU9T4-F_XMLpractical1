@@ -9,6 +9,8 @@ import javax.xml.transform.*;       // import DOM source classes
 
 //import com.sun.xml.internal.bind.marshaller.NioEscapeHandler;
 import org.w3c.dom.*;               // import DOM
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
   DOM handler to read XML information, to create this, and to print it.
@@ -37,15 +39,17 @@ public class DOMMenu {
 
     @param args         command-line arguments
   */
-  public static void main(String[] args)  {
+  public static void main(String[] args) throws SAXParseException {
     // load XML file into "document"
     loadDocument(args[0]);
 
-    // validate document method call to validate the document before the nodes are printed
-    //validateDocument(filename);
+    // validates the XML file
+    boolean isValidated = validateDocument(args[1]);
 
-    // print staff.xml using DOM methods and XPath queries
-    printNodes();
+    // print small_menu.xml using DOM methods and XPath queries
+    if (isValidated) {
+      printNodes();
+    }
   }
 
   /**
@@ -66,8 +70,6 @@ public class DOMMenu {
       // parse the document for later searching
       document = builder.parse(new File(filename)); //XML document is parsed into a full tree document
 
-      // validate document method call to validate the document before the nodes are printed
-      validateDocument(filename);
     }
     catch (Exception exception) {
       System.err.println("could not load document " + exception);
@@ -79,7 +81,7 @@ public class DOMMenu {
    Validate the document given a schema file
    @param filename XSD file to read
   */
-  private static Boolean validateDocument(String filename)  {
+  private static Boolean validateDocument(String filename) throws SAXParseException {
     try {
       String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
       SchemaFactory factory = SchemaFactory.newInstance(language);
@@ -87,17 +89,19 @@ public class DOMMenu {
       Validator validator = schema.newValidator();
       validator.validate(new DOMSource(document)); //convert file into its own source before its validated
       return true;
-    } catch (Exception e){ //exception thrown if not validated
-      System.err.println(e);
-      //System.err.println("Could not load schema or validate"); //change to a specific message
-      System.err.println("Line reached in schema could not be loaded or validated due to an error in the syntax");
+    } catch (SAXParseException | IOException e) { //exception thrown if not validated
+      e.printStackTrace();
+      return false;
+    } catch (SAXException e) {
+      e.printStackTrace();
       return false;
     }
   }
+
   /**
     Print nodes using DOM methods and XPath queries.
   */
-  private static void printNodes() { //MODIFY METHOD to iterate through each node in the menu an print out the content
+  private static void printNodes() {
     Node menuItem_1 = document.getFirstChild();
     Node menuItem_2 = menuItem_1.getFirstChild().getNextSibling();
     System.out.println("First child is: " + menuItem_1.getNodeName());
@@ -111,7 +115,6 @@ public class DOMMenu {
       Node item = menuItems.item(i);
       if(item.getNodeType() == Node.ELEMENT_NODE){
         System.out.println(item.getTextContent());
-        //System.out.println(item.getNodeName());
       }
     }
   }
