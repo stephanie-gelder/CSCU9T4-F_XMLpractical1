@@ -111,6 +111,7 @@ public class DOMMenu {
     System.out.println(menuItem_3.getTextContent());
 
     NodeList menuItems = document.getElementsByTagName("*");
+    //traverses the NodeList menuItems and gets the content of each element in turn
     for (int i = 0; i < menuItems.getLength(); i++){
       Node item = menuItems.item(i);
       if(item.getNodeType() == Node.ELEMENT_NODE){
